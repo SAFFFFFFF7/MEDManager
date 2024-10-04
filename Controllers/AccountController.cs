@@ -8,11 +8,15 @@ namespace MEDManager.Controllers
     {
         private readonly SignInManager<Doctor> _signInManager; // permet de gerer la connexion et la deconnexion des utilisateurs, nous est fourni par ASP.NET Core Identity
 
-        public AccountController(SignInManager<Doctor> signInManager)
+        private readonly UserManager<Doctor> _userManager;
+
+        public AccountController(SignInManager<Doctor> signInManager, UserManager<Doctor> userManager)
         {
-            _signInManager = signInManager; // Signin manager est injecté dans le constructeur,
-                                            // c'est une classe generique qui prend en parametre ApplicationUser
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
+
+
 
         public IActionResult Login()
         {
@@ -24,7 +28,7 @@ namespace MEDManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName , model.Password, model.RememberMe, false);
 
                 if (result.Succeeded)
                 {
@@ -35,6 +39,43 @@ namespace MEDManager.Controllers
             }
 
             return View(model);
+        }
+
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View(); // permet d'afficher dans le navigateur la vue qui se trouve dans : /Views/Account/Register.cshtml
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var doctor = new Doctor {
+                    UserName = model.UserName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                };
+
+                var result = await _userManager.CreateAsync(doctor, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(doctor, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Logout()

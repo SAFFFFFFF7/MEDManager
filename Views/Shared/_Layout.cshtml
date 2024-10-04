@@ -14,33 +14,44 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Home</a>
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home">Home</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a asp-action="Index" asp-controller="Student" asp-route-id="" class="nav-link active"
-                            aria-current="page">Voir les étudiants</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-action="Index" asp-controller="Teacher" asp-route-id="" class="nav-link active"
-                            aria-current="page">Voir les professeurs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-action="Index" asp-controller="Classe" asp-route-id="" class="nav-link active"
-                            aria-current="page">Voir les classes</a>
-                    </li>
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User?.Identity?.IsAuthenticated == true)
                     {
-                        <li class="navbar-text">Hello, @User.Identity.Name!</li>
-                        <a asp-action="Logout" asp-controller="Account">Logout</a>
+                        @* <li class="navbar-text">Hello, @User.Identity.Name!</li>
+                        <a asp-action="Logout" asp-controller="Account">Logout</a> *@
+                        <li class="nav-item" class="navbar-text">
+                            Hello, @User.Identity.Name!
+                            <a asp-action="Logout" asp-controller="Account" asp-route-id="" class="nav-link active"
+                                aria-current="page">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Student" asp-route-id="" class="nav-link active"
+                                aria-current="page">Voir les étudiants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Teacher" asp-route-id="" class="nav-link active"
+                                aria-current="page">Voir les professeurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Classe" asp-route-id="" class="nav-link active"
+                                aria-current="page">Voir les classes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        </li>
                     }
                     else
                     {
-                        <a asasp-action="Login" asp-controller="Account">Login</a>
+                        <li class="nav-item">
+                            <a asp-action="Login" asp-route-id="" aria-disabled="true"
+                                asp-controller="Account">Login</a>
+                        </li>
                     }
                 </ul>
             </div>

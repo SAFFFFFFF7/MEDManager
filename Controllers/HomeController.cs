@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        return View(); // retourne la vue Index.cshtml qui se trouve dans [controller]/[action].cshtml => /Views/Home/Index.cshtml /Views/Account/Register.cshtml
     }
 
     public IActionResult Privacy()
