@@ -24,15 +24,13 @@
                     @if (User?.Identity?.IsAuthenticated == true)
                     {
                         @* <li class="navbar-text">Hello, @User.Identity.Name!</li>
-                        <a asp-action="Logout" asp-controller="Account">Logout</a> *@
+                    <a asp-action="Logout" asp-controller="Account">Logout</a> *@
                         <li class="nav-item" class="navbar-text">
-                            Hello, @User.Identity.Name!
-                            <a asp-action="Logout" asp-controller="Account" asp-route-id="" class="nav-link active"
-                                aria-current="page">Logout</a>
+                            <a class="nav-link active">Hello, @User.Identity.Name!</a>        
                         </li>
                         <li class="nav-item">
-                            <a asp-action="Index" asp-controller="Student" asp-route-id="" class="nav-link active"
-                                aria-current="page">Voir les étudiants</a>
+                            <a asp-action="Index" asp-controller="Medicament" asp-route-id="" class="nav-link active"
+                                aria-current="page">Voir les médicaments</a>
                         </li>
                         <li class="nav-item">
                             <a asp-action="Index" asp-controller="Teacher" asp-route-id="" class="nav-link active"
@@ -43,14 +41,14 @@
                                 aria-current="page">Voir les classes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                            <a asp-action="Logout" asp-controller="Account" asp-route-id="" class="nav-link active"
+                                aria-current="page">Logout</a>
                         </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a asp-action="Login" asp-route-id="" aria-disabled="true"
-                                asp-controller="Account">Login</a>
+                            <a asp-action="Login" asp-route-id="" aria-disabled="true" asp-controller="Account">Login</a>
                         </li>
                     }
                 </ul>
