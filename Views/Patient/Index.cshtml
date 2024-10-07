@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Patient>
+@{
+    <html>
+
+    <head>
+        <title>Index</title>
+    </head>
+
+    <body>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-8">
+                    <h1>Afficher ici la liste des patients :</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Prénom</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Âge</th>
+                                <th scope="col">Details</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var patient in Model)
+                            {
+                                <tr>
+                                    <td>@patient.FirstName</td>
+                                    <td>@patient.LastName</td>
+                                    <td>@patient.Age</td>
+                                    <td><a asp-action="ShowDetails" asp-route-id="@patient.Id"><i class="bi bi-file-earmark-text"></i></a></td>
+                                    <td><a asp-action="Edit" asp-route-id="@patient.Id"><i class="bi bi-pen"></i></a></td>
+                                    <td><a asp-action="Delete" asp-route-id="@patient.Id"><i class="bi bi-trash3"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-5">
+                    <a asp-action="Add" asp-route-id="" type="button" class="btn btn-primary"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                        Ajouter un patient
+                    </a>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        </div>
+    </body>
+
+    </html>
+}
+
