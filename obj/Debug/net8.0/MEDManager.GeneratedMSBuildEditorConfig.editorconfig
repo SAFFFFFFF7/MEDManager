@@ -54,6 +54,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/Views/MedicalHistory/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhbEhpc3RvcnkvQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/Views/MedicalHistory/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhbEhpc3RvcnkvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/Views/MedicalHistory/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhbEhpc3RvcnkvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/Views/MedicalHistory/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhbEhpc3RvcnkvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/Views/Medicament/Add.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhbWVudC9BZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
