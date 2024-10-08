@@ -29,8 +29,8 @@ public class Patient
 
     [Required(ErrorMessage = "Le poids est obligatoire.")]
     public double Weight { get; set; }
-    public string DoctorId { get; set; }
-    public Doctor Doctor { get; set; } = new();
+    public required string DoctorId { get; set; }
+    public Doctor? Doctor { get; set; }
     public List<Prescription> Prescriptions { get; set; } = new();
     public List<Allergy> Allergies { get; set; } = new();
     public List<MedicalHistory> MedicalHistories { get; set; } = new();

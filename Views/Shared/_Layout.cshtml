@@ -23,11 +23,6 @@
                 <ul class="navbar-nav">
                     @if (User?.Identity?.IsAuthenticated == true)
                     {
-                        @* <li class="navbar-text">Hello, @User.Identity.Name!</li>
-                    <a asp-action="Logout" asp-controller="Account">Logout</a> *@
-                        <li class="nav-item" class="navbar-text">
-                            <a class="nav-link active">Hello, @User.Identity.Name!</a>
-                        </li>
                         <li class="nav-item">
                             <a asp-action="Index" asp-controller="Medicament" asp-route-id="" class="nav-link active"
                                 aria-current="page">Voir les médicaments</a>
@@ -43,6 +38,9 @@
                         <li class="nav-item">
                             <a asp-action="Index" asp-controller="MedicalHistory" asp-route-id="" class="nav-link active"
                                 aria-current="page">Voir les antécedents</a>
+                        </li>
+                        <li class="nav-item" class="navbar-text">
+                            <a class="nav-link active">Hello, @User.Identity.Name!</a>
                         </li>
                         <li class="nav-item">
                             <a asp-action="Logout" asp-controller="Account" asp-route-id="" class="nav-link active"

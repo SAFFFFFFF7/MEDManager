@@ -48,12 +48,10 @@
             <span asp-validation-for="Weight" class="text-danger"></span>
         </div>
 
-        @* Jsuis pas sur faut que je recup les données du doctor qui cree le patient !!!!!!*@
         <div class="form-group">
-            <label asp-for="Doctor.FirstName"></label> <input asp-for="Doctor.FirstName" class="form-control" />
-            @* ajout de message d'erreur de validation inline pour chaque propriete individuellement *@
-            <span asp-validation-for="Doctor.FirstName" class="text-danger"></span>
+            <input type="hidden" id="DoctorId" name="DoctorId" value="" />
         </div>
+
 
         <br />
         <br />
