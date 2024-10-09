@@ -28,14 +28,25 @@ namespace MEDManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            var viewModel = new PatientViewModel
+            {
+                DoctorId = _userManager.GetUserId(User),
+                MedicalHistories = await _dbContext.MedicalHistories.ToListAsync(),
+                Allergies = await _dbContext.Allergies.ToListAsync(),
+                SelectedMedicalHistoryIds = new List<int>(),
+                SelectedAllergyIds = new List<int>()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Patient patient)
+        public async Task<IActionResult> Add(Patient patient, PatientViewModel viewModel)
         {
+      
+
             if (!ModelState.IsValid)
             {
                 return View();
@@ -43,6 +54,28 @@ namespace MEDManager.Controllers
 
             patient.DoctorId = _doctorId;
             patient.Doctor = await _userManager.GetUserAsync(User);
+
+            if (viewModel.SelectedAllergyIds != null)
+            {
+                var selectedAllergies = await _dbContext.Allergies
+                    .Where(a => viewModel.SelectedAllergyIds.Contains(a.Id))
+                    .ToListAsync();
+                foreach (var allergy in selectedAllergies)
+                {
+                    patient.Allergies.Add(allergy);
+                }
+            }
+
+            if (viewModel.SelectedMedicalHistoryIds != null)
+            {
+                var selectedMedicalHistories = await _dbContext.MedicalHistories
+                    .Where(a => viewModel.SelectedMedicalHistoryIds.Contains(a.Id))
+                    .ToListAsync();
+                foreach (var medicalHistories in selectedMedicalHistories)
+                {
+                    patient.MedicalHistories.Add(medicalHistories);
+                }
+            }
             _dbContext.Patients.Add(patient);
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
@@ -82,8 +115,8 @@ namespace MEDManager.Controllers
             var patient = await _dbContext.Patients
                 .Include(p => p.MedicalHistories)
                 .Include(p => p.Allergies)
-                .Include(p => p.Prescriptions)
-                .Include(p => p.Doctor)
+                // .Include(p => p.Prescriptions)
+                // .Include(p => p.Doctor)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (patient == null)
@@ -119,8 +152,6 @@ namespace MEDManager.Controllers
                     var patient = await _dbContext.Patients
                         .Include(p => p.MedicalHistories)
                         .Include(p => p.Allergies)
-                        .Include(p => p.Prescriptions)
-                        .Include(p => p.Doctor)
                         .FirstOrDefaultAsync(p => p.Id == id);
 
                     if (patient == null)
@@ -158,11 +189,12 @@ namespace MEDManager.Controllers
                         var selectedMedicalHistories = await _dbContext.MedicalHistories
                             .Where(a => viewModel.SelectedMedicalHistoryIds.Contains(a.Id))
                             .ToListAsync();
-                        foreach (var antecedent in selectedMedicalHistories)
+                        foreach (var medicalHistories in selectedMedicalHistories)
                         {
-                            patient.MedicalHistories.Add(antecedent);
+                            patient.MedicalHistories.Add(medicalHistories);
                         }
                     }
+
                     _dbContext.Entry(patient).State = EntityState.Modified;
                     await _dbContext.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

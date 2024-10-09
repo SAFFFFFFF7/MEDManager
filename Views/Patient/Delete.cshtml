@@ -1,0 +1,23 @@
+﻿@model Patient
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer un patient :</title>
+</head>
+
+<body>
+    <h1>Êtes-vous sûr de vouloir supprimer ce patient ?</ h1>
+        <form asp-action="DeleteConfirmed" method="post">
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group">
+                <label asp-for="FirstName"></label> <input asp-for="FirstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName"></label> <input asp-for="LastName" class="form-control" />
+            </div>
+            <input type="submit" value="Supprimer" class="btn btn-danger" />
+            <input type="button" onclick="history.back()" value="Retour" class="btn btn-secondary" />
+        </form>
+</body>
