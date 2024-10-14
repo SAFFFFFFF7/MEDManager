@@ -28,6 +28,22 @@ namespace MEDManager.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ShowDetails(int id)
+        {
+            var patient = await _dbContext.Patients
+                .Include(p => p.MedicalHistories)
+                .Include(p => p.Allergies)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (patient != null)
+            {
+                return View(patient);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Add()
         {
             var viewModel = new PatientViewModel
@@ -45,7 +61,7 @@ namespace MEDManager.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Patient patient, PatientViewModel viewModel)
         {
-      
+
 
             if (!ModelState.IsValid)
             {
@@ -115,8 +131,6 @@ namespace MEDManager.Controllers
             var patient = await _dbContext.Patients
                 .Include(p => p.MedicalHistories)
                 .Include(p => p.Allergies)
-                // .Include(p => p.Prescriptions)
-                // .Include(p => p.Doctor)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (patient == null)
