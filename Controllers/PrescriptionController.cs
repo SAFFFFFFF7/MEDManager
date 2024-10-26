@@ -4,6 +4,7 @@ using MEDManager.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace MEDManager.Controllers
 {
@@ -33,9 +34,8 @@ namespace MEDManager.Controllers
             {
                 DoctorId = _userManager.GetUserId(User),
                 PatientId = _userManager.GetUserId(User),
-                SelectedPatientIds = new List<int>(),
+                Patients = await _dbContext.Patients.ToListAsync(),
                 SelectedMedicamentIds = new List<int>(),
-                DrpPatients = _dbContext.Patients.Select(x => new SelectListItem { Text = x.LastName, Value = x.Id.ToString() }).ToList(),
                 DrpMedicaments = _dbContext.Medicaments.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList()
             };
 

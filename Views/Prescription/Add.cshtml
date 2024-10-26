@@ -18,18 +18,13 @@
         <input asp-for="@Model.PatientId" type="hidden" />
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.SelectedPatientIds, new { @class = "col-sm-2 col-form-label" })
-        <div class="col-sm-6">
-            @Html.ListBoxFor(model => model.SelectedPatientIds, new MultiSelectList(Model.DrpPatients,
-                     "Value", "Text"), new
-                     {
-                         @class = "form-control",
-                         multiple = "multiple",
-                         id = "Patients_dropdown"
-                     })
-        </div>
-    </div>
+
+    <select>
+    @foreach (var patient in Model.Patients)
+    {
+        <option value="@patient.FirstName" id="@patient.Id">@patient.FirstName @patient.LastName</option>
+    }
+    </select>
 
     <div class="form-group">
         @Html.LabelFor(model => model.SelectedMedicamentIds, new { @class = "col-sm-2 col-form-label" })
