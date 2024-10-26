@@ -1,12 +1,28 @@
 {
   "Files": [
     {
+      "Id": "/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/wwwroot/css/bootstrap-multiselect.css",
+      "PackagePath": "staticwebassets/css/bootstrap-multiselect.css"
+    },
+    {
+      "Id": "/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/wwwroot/css/bootstrap-multiselect.min.css",
+      "PackagePath": "staticwebassets/css/bootstrap-multiselect.min.css"
+    },
+    {
       "Id": "/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },
     {
       "Id": "/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/wwwroot/js/bootstrap-multiselect.js",
+      "PackagePath": "staticwebassets/js/bootstrap-multiselect.js"
+    },
+    {
+      "Id": "/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/wwwroot/js/bootstrap-multiselect.min.js",
+      "PackagePath": "staticwebassets/js/bootstrap-multiselect.min.js"
     },
     {
       "Id": "/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/wwwroot/js/site.js",

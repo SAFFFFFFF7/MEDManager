@@ -1,6 +1,8 @@
 using MEDManager.Data;
 using MEDManager.Models;
+using MEDManager.ViewModel.Medicament;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MEDManager.Controllers
 {
@@ -19,19 +21,48 @@ namespace MEDManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            var viewModel = new MedicamentViewModel
+            {
+                MedicalHistories = await _dbContext.MedicalHistories.ToListAsync(),
+                Allergies = await _dbContext.Allergies.ToListAsync(),
+                SelectedMedicalHistoryIds = new List<int>(),
+                SelectedAllergyIds = new List<int>(),
+            };
+
+            return View(viewModel);
         }
 
-        [HttpPost]
-        public IActionResult Add(Medicament medicament)
+                [HttpPost]
+        public async Task<IActionResult> Add(Medicament medicament, MedicamentViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
+            if (viewModel.SelectedAllergyIds != null)
+            {
+                var selectedAllergies = await _dbContext.Allergies
+                    .Where(a => viewModel.SelectedAllergyIds.Contains(a.Id))
+                    .ToListAsync();
+                foreach (var allergy in selectedAllergies)
+                {
+                    medicament.Allergies.Add(allergy);
+                }
+            }
+
+            if (viewModel.SelectedMedicalHistoryIds != null)
+            {
+                var selectedMedicalHistories = await _dbContext.MedicalHistories
+                    .Where(a => viewModel.SelectedMedicalHistoryIds.Contains(a.Id))
+                    .ToListAsync();
+                foreach (var medicalHistories in selectedMedicalHistories)
+                {
+                    medicament.MedicalHistories.Add(medicalHistories);
+                }
+            }
             _dbContext.Medicaments.Add(medicament);
             _dbContext.SaveChanges();
             return RedirectToAction("Index");

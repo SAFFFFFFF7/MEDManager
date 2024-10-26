@@ -1,0 +1,68 @@
+﻿@model PrescriptionViewModel
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add</title>
+</head>
+
+<h1>Créer une ordonnance</h1>
+
+<form asp-action="Add">
+
+    <div>
+        <input asp-for="@Model.DoctorId" type="hidden" class="form-control" />
+    </div>
+
+    <div>
+        <input asp-for="@Model.PatientId" type="hidden" />
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SelectedPatientIds, new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-6">
+            @Html.ListBoxFor(model => model.SelectedPatientIds, new MultiSelectList(Model.DrpPatients,
+                     "Value", "Text"), new
+                     {
+                         @class = "form-control",
+                         multiple = "multiple",
+                         id = "Patients_dropdown"
+                     })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SelectedMedicamentIds, new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-6">
+            @Html.ListBoxFor(model => model.SelectedMedicamentIds, new MultiSelectList(Model.DrpMedicaments,
+                     "Value", "Text"), new
+                     {
+                         @class = "form-control",
+                         multiple = "multiple",
+                         id = "Medicaments_dropdown"
+                     })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Enregistrer" class="btn btn-primary" />
+    </div>
+
+</form>
+
+<div>
+    <a asp-action="Index">Retour à la liste</a>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#Patients_dropdown').multiselect();
+        });
+        $(document).ready(function () {
+            $('#Medicaments_dropdown').multiselect();
+        });
+    </script>
+}

@@ -1,4 +1,6 @@
-﻿@model Medicament
+﻿@using MEDManager.ViewModel.Medicament
+
+@model MedicamentViewModel
 
 
 <head>
@@ -27,6 +29,32 @@
         @* ajout de message d'erreur de validation inline pour chaque propriete individuellement *@
         <span asp-validation-for="Ingredients" class="text-danger"></span>
     </div>
+
+
+    <h4>Antécédents</h4>
+    <div class="form-group">
+        @foreach (var medicalHistory in Model.MedicalHistories)
+        {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="SelectedMedicalHistoryIds" value="@medicalHistory.Id"
+                @(Model.SelectedMedicalHistoryIds != null && Model.SelectedMedicalHistoryIds.Contains(medicalHistory.Id) ? "checked" : "") />
+                    <label class="form-check-label">@medicalHistory.Name</label>
+                </div>
+        }
+    </div>
+
+    <h4>Allergies</h4>
+    <div class="form-group">
+        @foreach (var allergy in Model.Allergies)
+        {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="SelectedAllergyIds" value="@allergy.Id"
+                @(Model.SelectedAllergyIds != null && Model.SelectedAllergyIds.Contains(allergy.Id) ? "checked" : "") />
+                    <label class="form-check-label">@allergy.Name</label>
+                </div>
+        }
+    </div> 
+
 
     <br />
     <br />
