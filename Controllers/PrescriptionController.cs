@@ -30,15 +30,13 @@ namespace MEDManager.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var viewModel = new PrescriptionViewModel
+            var DoctorId = _userManager.GetUserId(User);
+            if(DoctorId == null) return NotFound();
+            
+            var viewModel = new PatientListViewModel
             {
-                DoctorId = _userManager.GetUserId(User),
-                PatientId = _userManager.GetUserId(User),
-                Patients = await _dbContext.Patients.ToListAsync(),
-                SelectedMedicamentIds = new List<int>(),
-                DrpMedicaments = _dbContext.Medicaments.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList()
+                Patients = await _dbContext.Patients.Where(x => x.DoctorId == DoctorId).ToListAsync(),
             };
-
             return View(viewModel);
         }
     }
