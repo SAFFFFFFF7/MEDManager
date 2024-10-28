@@ -1,6 +1,6 @@
 using MEDManager.Data;
 using MEDManager.Models;
-using MEDManager.ViewModel.Medicament;
+using MEDManager.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,7 +34,7 @@ namespace MEDManager.Controllers
             return View(viewModel);
         }
 
-                [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Add(Medicament medicament, MedicamentViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -98,40 +98,105 @@ namespace MEDManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            Medicament? medi = _dbContext.Medicaments.FirstOrDefault<Medicament>(m => m.Id == id);
+            var medicament = await _dbContext.Medicaments
+                .Include(p => p.MedicalHistories)
+                .Include(p => p.Allergies)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (medi != null)
+            if (medicament == null)
             {
-                return View(medi);
+                return NotFound();
             }
 
-            return NotFound();
+            var viewModel = new MedicamentViewModel
+            {
+                Medicament = medicament,
+                MedicalHistories = await _dbContext.MedicalHistories.ToListAsync(),
+                Allergies = await _dbContext.Allergies.ToListAsync(),
+                SelectedMedicalHistoryIds = medicament.MedicalHistories.Select(m => m.Id).ToList() ?? new List<int>(),
+                SelectedAllergyIds = medicament.Allergies.Select(a => a.Id).ToList() ?? new List<int>(),
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(Medicament medicament)
+        public async Task<IActionResult> Edit(int id, MedicamentViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            if (id != viewModel.Medicament.Id)
             {
-                return View();
+                return NotFound();
             }
 
-            Medicament? medi = _dbContext.Medicaments.FirstOrDefault<Medicament>(m => m.Id == medicament.Id);
-
-            if (medi != null)
+            if (ModelState.IsValid)
             {
-                medi.Name = medicament.Name;
-                medi.Quantity = medicament.Quantity;
-                medi.Ingredients = medicament.Ingredients;
+                try
+                {
+                    var medicament = await _dbContext.Medicaments
+                        .Include(p => p.MedicalHistories)
+                        .Include(p => p.Allergies)
+                        .FirstOrDefaultAsync(p => p.Id == id);
 
-                _dbContext.SaveChanges();
+                    if (medicament == null)
+                    {
+                        return NotFound();
+                    }
 
-                return RedirectToAction("Index");
+                    medicament.Name = viewModel.Medicament.Name;
+                    medicament.Quantity = viewModel.Medicament.Quantity;
+                    medicament.Ingredients = viewModel.Medicament.Ingredients;
+
+                    medicament.Allergies.Clear();
+                    if (viewModel.SelectedAllergyIds != null)
+                    {
+                        var selectedAllergies = await _dbContext.Allergies
+                            .Where(a => viewModel.SelectedAllergyIds.Contains(a.Id))
+                            .ToListAsync();
+                        foreach (var allergy in selectedAllergies)
+                        {
+                            medicament.Allergies.Add(allergy);
+                        }
+                    }
+
+                    medicament.MedicalHistories.Clear();
+                    if (viewModel.SelectedMedicalHistoryIds != null)
+                    {
+                        var selectedMedicalHistories = await _dbContext.MedicalHistories
+                            .Where(a => viewModel.SelectedMedicalHistoryIds.Contains(a.Id))
+                            .ToListAsync();
+                        foreach (var medicalHistories in selectedMedicalHistories)
+                        {
+                            medicament.MedicalHistories.Add(medicalHistories);
+                        }
+                    }
+
+                    _dbContext.Entry(medicament).State = EntityState.Modified;
+                    await _dbContext.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+
+                }
+                catch
+                {
+                    if (!MedicamentExists(viewModel.MedicamentId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
+            viewModel.MedicalHistories = await _dbContext.MedicalHistories.ToListAsync();
+            viewModel.Allergies = await _dbContext.Allergies.ToListAsync();
+            return View(viewModel);
+        }
 
-            return NotFound();
+        private bool MedicamentExists(int id)
+        {
+            return _dbContext.Medicaments.Any(m => m.Id == id);
         }
     }
 }

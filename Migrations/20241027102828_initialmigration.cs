@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MEDManager.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace MEDManager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
+                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -94,7 +94,7 @@ namespace MEDManager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
+                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -109,11 +109,11 @@ namespace MEDManager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
+                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Quantity = table.Column<string>(type: "longtext", nullable: true)
+                    Quantity = table.Column<string>(type: "varchar(1024)", maxLength: 1024, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Ingredients = table.Column<string>(type: "longtext", nullable: true)
+                    Ingredients = table.Column<string>(type: "varchar(1024)", maxLength: 1024, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -263,16 +263,15 @@ namespace MEDManager.Migrations
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<double>(type: "double", nullable: false),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    DoctorId1 = table.Column<string>(type: "varchar(255)", nullable: false)
+                    DoctorId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Patients_AspNetUsers_DoctorId1",
-                        column: x => x.DoctorId1,
+                        name: "FK_Patients_AspNetUsers_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -385,23 +384,22 @@ namespace MEDManager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    StartDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    EndDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Dosage = table.Column<string>(type: "longtext", nullable: false)
+                    StartDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    EndDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    Dosage = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    AdditionalInformation = table.Column<string>(type: "longtext", nullable: false)
+                    AdditionalInformation = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PatientId = table.Column<int>(type: "int", nullable: false),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    DoctorId1 = table.Column<string>(type: "varchar(255)", nullable: false)
+                    DoctorId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prescriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Prescriptions_AspNetUsers_DoctorId1",
-                        column: x => x.DoctorId1,
+                        name: "FK_Prescriptions_AspNetUsers_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -502,14 +500,14 @@ namespace MEDManager.Migrations
                 column: "PatientsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patients_DoctorId1",
+                name: "IX_Patients_DoctorId",
                 table: "Patients",
-                column: "DoctorId1");
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Prescriptions_DoctorId1",
+                name: "IX_Prescriptions_DoctorId",
                 table: "Prescriptions",
-                column: "DoctorId1");
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_PatientId",

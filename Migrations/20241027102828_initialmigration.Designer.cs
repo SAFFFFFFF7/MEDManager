@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MEDManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241004104645_initialMigration")]
-    partial class initialMigration
+    [Migration("20241027102828_initialmigration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,9 @@ namespace MEDManager.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
@@ -152,7 +154,9 @@ namespace MEDManager.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
@@ -168,13 +172,19 @@ namespace MEDManager.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Ingredients")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("Quantity")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("varchar(1024)");
 
                     b.HasKey("Id");
 
@@ -192,10 +202,7 @@ namespace MEDManager.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DoctorId1")
+                    b.Property<string>("DoctorId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -218,7 +225,7 @@ namespace MEDManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId1");
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("Patients");
                 });
@@ -232,32 +239,27 @@ namespace MEDManager.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AdditionalInformation")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DoctorId1")
+                    b.Property<string>("DoctorId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Dosage")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateOnly>("EndDate")
+                    b.Property<DateOnly?>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("StartDate")
+                    b.Property<DateOnly?>("StartDate")
                         .HasColumnType("date");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId1");
+                    b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientId");
 
@@ -479,7 +481,7 @@ namespace MEDManager.Migrations
                 {
                     b.HasOne("MEDManager.Models.Doctor", "Doctor")
                         .WithMany("Patients")
-                        .HasForeignKey("DoctorId1")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -490,7 +492,7 @@ namespace MEDManager.Migrations
                 {
                     b.HasOne("MEDManager.Models.Doctor", "Doctor")
                         .WithMany("Prescriptions")
-                        .HasForeignKey("DoctorId1")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

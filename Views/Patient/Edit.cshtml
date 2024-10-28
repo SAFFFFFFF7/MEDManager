@@ -60,7 +60,7 @@
     <div>
 
 
-    @* <h4>Allergies</h4>
+    <h4>Allergies</h4>
     <div class="form-group">
         @foreach (var allergy in Model.Allergies)
         {
@@ -71,9 +71,9 @@
                 <label class="form-check-label">@allergy.Name</label>
             </div>
         }
-    </div> *@
+    </div>
 
-    <div class="form-group">
+    @* <div class="form-group">
         @Html.LabelFor(model => model.SelectedMedicalHistoryIds, new { @class = "col-sm-2 col-form-label" })
         <div class="col-sm-6">
             @Html.ListBoxFor(model => model.SelectedMedicalHistoryIds, new MultiSelectList(Model.DrpMedicalHistories,
@@ -85,9 +85,9 @@
                         name = "SelectedMedicalHistoryIds"
                     })
         </div>
-    </div>
+    </div> *@
 
-    @* <h4>Antécédents</h4>
+    <h4>Antécédents</h4>
     <div class="form-group">
         @foreach (var medicalHistory in Model.MedicalHistories)
         {
@@ -98,9 +98,9 @@
                 <label class="form-check-label">@medicalHistory.Name</label>
             </div>
         }
-    </div> *@
+    </div>
 
-    <div class="form-group">
+    @* <div class="form-group">
         @Html.LabelFor(model => model.SelectedAllergyIds, new { @class = "col-sm-2 col-form-label" })
         <div class="col-sm-6">
             @Html.ListBoxFor(model => model.SelectedAllergyIds, new MultiSelectList(Model.DrpAllergies,
@@ -111,7 +111,7 @@
                         id = "Allergies_dropdown",
                         name = "SelectedAllergyIds"
                     })
-    </div>
+    </div> *@
 
     <div class="form-group">
         <input type="submit" value="Enregistrer" class="btn btn-primary" />

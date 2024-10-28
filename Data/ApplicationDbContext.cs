@@ -46,11 +46,15 @@ public class ApplicationDbContext : IdentityDbContext<Doctor>
 
     modelBuilder.Entity<Doctor>()
         .HasMany(d => d.Patients)
-        .WithOne(p => p.Doctor);
+        .WithOne(p => p.Doctor)
+        .HasForeignKey(p => p.DoctorId)
+        .HasPrincipalKey(d => d.Id);
 
     modelBuilder.Entity<Doctor>()
         .HasMany(d => d.Prescriptions)
-        .WithOne(p => p.Doctor);
+        .WithOne(p => p.Doctor)
+        .HasForeignKey(p => p.DoctorId)
+        .HasPrincipalKey(d => d.Id);
 
     modelBuilder.Entity<Medicament>()
         .HasMany(m => m.Prescriptions)
