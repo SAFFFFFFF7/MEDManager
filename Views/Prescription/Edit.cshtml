@@ -1,4 +1,11 @@
-﻿@model Prescription
+﻿@using MEDManager.ViewModel
+@model Tuple<Prescription, IEnumerable<Medicament>>
 
-@await Html.PartialAsync("_PatientCard", Model.Patient)
+@await Html.PartialAsync("_PatientCard", Model.Item1.Patient)
+
+@await Html.PartialAsync("_Form", new FormViewModel { PrescriptionId = Model.Item1.Id, 
+    StartDate = Model.Item1.StartDate, EndDate = Model.Item1.EndDate, Dosage = Model.Item1.Dosage, 
+    AdditionalInformation = Model.Item1.AdditionalInformation, Medicaments = Model.Item2.ToList(),
+    SelectedMedicamentIds = Model.Item1.Medicaments.Select(m => m.Id).ToList()
+})
 

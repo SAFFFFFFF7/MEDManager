@@ -14,42 +14,22 @@
 
 <form asp-action="Edit" asp-controller="Medicament" method="post">
 
-    <input type="hidden" asp-for="Medicament.Id" />
+    <input asp-for="@Model.MedicamentId" type="hidden" /> 
 
-    <div class="flex flex-col">
-        <label asp-for="Name" class="block mb-2 text-md font-medium text-text"></label>
-        <input asp-for="Name" class="input input-bordered w-full" />
-        <span asp-validation-for="Name" class="text-error"></span>
-    </div>
-
-    <div class="flex flex-col">
-        <label asp-for="Quantity" class="block mb-2 text-md font-medium text-text"></label>
-        <input asp-for="Quantity" class="input input-bordered w-full" />
-        <span asp-validation-for="Quantity" class="text-error"></span>
-    </div>
-
-    <div class="flex flex-col">
-        <label asp-for="Ingredients" class="block mb-2 text-md font-medium text-text"></label>
-        <input asp-for="Ingredients" class="input input-bordered w-full" />
-        <span asp-validation-for="Ingredients" class="text-error"></span>
-    </div>
-
-    @* <input asp-for="Medicament.Id" type="hidden" /> *@
-
-    @* <div class="form-group">
+    <div class="form-group">
         <label asp-for="@Model.Name"></label> <input asp-for="@Model.Name" class="form-control" />
         <span asp-validation-for="@Model.Name" class="text-danger"></span>
-    </div> *@
+    </div> 
 
-    @* <div class="form-group">
+    <div class="form-group">
         <label asp-for="@Model.Quantity"></label> <input asp-for="@Model.Quantity" class="form-control" />
         <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
-    </div> *@
+    </div> 
 
-    @* <div class="form-group">
+    <div class="form-group">
         <label asp-for="@Model.Ingredients"></label> <input asp-for="@Model.Ingredients" class="form-control" />
         <span asp-validation-for="@Model.Ingredients" class="text-danger"></span>
-    </div> *@
+    </div>
 
     <h4>Allergies</h4>
     <div class="form-group">

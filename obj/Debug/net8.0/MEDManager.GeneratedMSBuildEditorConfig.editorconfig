@@ -110,6 +110,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlc2NyaXB0aW9uL0FkZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/Views/Prescription/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlc2NyaXB0aW9uL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/safwaneremadi/bts_sio/2023_2024/spe_dev/MVC/AP2-MEDManager/MEDManager/Views/Prescription/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlc2NyaXB0aW9uL0VkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,5 +1,6 @@
 using MEDManager.Data;
 using MEDManager.Models;
+using MEDManager.ViewModel;
 using MEDManager.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -68,24 +69,124 @@ namespace MEDManager.Controllers
 
             await _dbContext.SaveChangesAsync();
 
-            return RedirectToAction("Edit", new {Id = prescription.Entity.Id});
+            return RedirectToAction("Edit", new { Id = prescription.Entity.Id });
         }
+
+        public IActionResult Delete(int id)
+        {
+            Prescription? pres = _dbContext.Prescriptions.FirstOrDefault<Prescription>(p => p.Id == id);
+
+            if (pres != null)
+            {
+                return View(pres);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int Id)
+        {
+            Prescription? pres = _dbContext.Prescriptions.FirstOrDefault<Prescription>(p => p.Id == Id);
+
+            if (pres != null)
+            {
+                _dbContext.Prescriptions.Remove(pres);
+                _dbContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return NotFound();
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var prescription = await _dbContext.Prescriptions
-                .Include(p => p.Patient)
-                .Include(p => p.Doctor)
-                .Include(p => p.Medicaments)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            .Include(p => p.Patient)
+            .ThenInclude(patient => patient.Allergies)
+            .Include(p => p.Doctor)
+            .Include(p => p.Medicaments)
+            .Include(prescription => prescription.Patient)
+            .ThenInclude(patient => patient.MedicalHistories)
+            .FirstOrDefaultAsync(p => p.Id == id);
 
             if (prescription == null)
             {
                 return NotFound();
             }
 
-            return View(prescription);
+            var allergiesPatient = prescription.Patient.Allergies.Select(pa => pa.Id).ToList();
+            var medicalHistoryPatient = prescription.Patient.MedicalHistories.Select(mh => mh.Id).ToList();
+            var medicamentList = await _dbContext.Medicaments
+                .Where(m => !m.Allergies.Any(a => allergiesPatient.Contains(a.Id)) && !m.MedicalHistories.Any(mh => medicalHistoryPatient.Contains(mh.Id)))
+                .ToListAsync();
+
+            var model = new Tuple<Prescription, IEnumerable<Medicament>>(prescription, medicamentList);
+
+            return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, FormViewModel model)
+        {
+            if (id != model.PrescriptionId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var prescription = await _dbContext.Prescriptions
+                        .Include(p => p.Patient)
+                        .Include(d => d.Doctor)
+                        .Include(m => m.Medicaments)
+                        .FirstOrDefaultAsync(p => p.Id == id);
+
+                    if (prescription == null)
+                    {
+                        return NotFound();
+                    }
+
+                    prescription.StartDate = model.StartDate;
+                    prescription.EndDate = model.EndDate;
+                    prescription.Dosage = model.Dosage;
+                    prescription.AdditionalInformation = model.AdditionalInformation;
+
+                    prescription.Medicaments.Clear();
+
+                    var selectedMedicaments = await _dbContext.Medicaments.Where(m => model.SelectedMedicamentIds.Contains(m.Id)).ToListAsync();
+
+                    foreach (var medicament in selectedMedicaments) { prescription.Medicaments.Add(medicament); }
+
+                    _dbContext.Entry(prescription).State = EntityState.Modified;
+                    await _dbContext.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    if (!MedicamentExists(model.PrescriptionId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            model.Medicaments = await _dbContext.Medicaments.ToListAsync();
+            return View(model);
+        }
+
+        private bool MedicamentExists(int id)
+        {
+            return _dbContext.Medicaments.Any(m => m.Id == id);
+        }
+
     }
 }

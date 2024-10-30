@@ -11,9 +11,7 @@ namespace MEDManager.ViewModel;
 public class MedicamentViewModel
 {
     public int MedicamentId { get; set; }
-    public Medicament? Medicament { get; set; }
-
-
+    
     [Display(Name = "Nom du médicament")]
     [Required(ErrorMessage = "Le nom du médicament est requis.")]
     [StringLength(256, MinimumLength = 1, ErrorMessage = "Le nom du médicament doit contenir moins de 256 caractères.")]

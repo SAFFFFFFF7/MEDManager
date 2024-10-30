@@ -112,11 +112,14 @@ namespace MEDManager.Controllers
 
             var viewModel = new MedicamentViewModel
             {
-                Medicament = medicament,
+                MedicamentId = medicament.Id,
+                Name = medicament.Name,
+                Quantity = medicament.Quantity,
+                Ingredients = medicament.Ingredients,
                 MedicalHistories = await _dbContext.MedicalHistories.ToListAsync(),
                 Allergies = await _dbContext.Allergies.ToListAsync(),
                 SelectedMedicalHistoryIds = medicament.MedicalHistories.Select(m => m.Id).ToList() ?? new List<int>(),
-                SelectedAllergyIds = medicament.Allergies.Select(a => a.Id).ToList() ?? new List<int>(),
+                SelectedAllergyIds = medicament.Allergies.Select(a => a.Id).ToList() ?? new List<int>()
             };
 
             return View(viewModel);
@@ -125,7 +128,7 @@ namespace MEDManager.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, MedicamentViewModel viewModel)
         {
-            if (id != viewModel.Medicament.Id)
+            if (id != viewModel.MedicamentId)
             {
                 return NotFound();
             }
@@ -144,9 +147,9 @@ namespace MEDManager.Controllers
                         return NotFound();
                     }
 
-                    medicament.Name = viewModel.Medicament.Name;
-                    medicament.Quantity = viewModel.Medicament.Quantity;
-                    medicament.Ingredients = viewModel.Medicament.Ingredients;
+                    medicament.Name = viewModel.Name;
+                    medicament.Quantity = viewModel.Quantity;
+                    medicament.Ingredients = viewModel.Ingredients;
 
                     medicament.Allergies.Clear();
                     if (viewModel.SelectedAllergyIds != null)
