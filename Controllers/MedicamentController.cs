@@ -14,6 +14,31 @@ namespace MEDManager.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Find(string searchString)
+        {
+            if (_dbContext.Medicaments == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            List<Medicament> medicaments = new();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                medicaments = _dbContext.Medicaments.Where(s => s.Name!.ToUpper().Contains(searchString.ToUpper())).ToList();
+            }
+
+            return View("Index", medicaments);
+        }
+
+        [HttpPost]
+        public string Find(string searchString, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + searchString;
+        }
+
         // GET: MedicamentController
         public ActionResult Index()
         {

@@ -8,6 +8,11 @@
 
 
     <div class="container text-center">
+        <form class="d-flex" role="search" asp-controller="Medicament" asp-action="Find" method="get">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" type="text"
+                name="SearchString" />
+            <button class="btn btn-outline-primary" type="submit" value="Filter">Search</button>
+        </form>
         <div class="row">
             <div class="col">
             </div>

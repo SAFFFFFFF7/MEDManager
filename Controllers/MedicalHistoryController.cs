@@ -11,6 +11,31 @@ namespace MEDManager.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Find(string searchString)
+        {
+            if (_dbContext.MedicalHistories == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            List<MedicalHistory> medicalHistories = new();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                medicalHistories = _dbContext.MedicalHistories.Where(s => s.Name!.ToUpper().Contains(searchString.ToUpper())).ToList();
+            }
+
+            return View("Index", medicalHistories);
+        }
+
+        [HttpPost]
+        public string Find(string searchString, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + searchString;
+        }
+        
         // GET: AllergyController
         public ActionResult Index()
         {

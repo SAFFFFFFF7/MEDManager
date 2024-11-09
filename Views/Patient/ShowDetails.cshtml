@@ -12,9 +12,9 @@
                 <div class="col">
                 </div>
                 <div class="col-8">
-                    </div>
-                        <input asp-for="@Model.DoctorId" type="hidden" class="form-control" />
-                    <div>
+                </div>
+                <input asp-for="@Model.DoctorId" type="hidden" class="form-control" />
+                <div>
                     <h1>details</h1>
                     <table class="table">
                         <thead>
@@ -25,6 +25,9 @@
                                 <th scope="col">Genre</th>
                                 <th scope="col">Taille</th>
                                 <th scope="col">Poids</th>
+                                <th scope="col">Allergies</th>
+                                <th scope="col">Antécédents</th>
+                                <th scope="col">Ordonnances</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,14 +38,30 @@
                                 <td>@Model.Gender</td>
                                 <td>@Model.Height</td>
                                 <td>@Model.Weight</td>
-                                @foreach (var allergy in Model.Allergies)
-                                {
-                                    <td>@allergy.Name</td>
-                                }
-                                @foreach (var medicalHistory in Model.MedicalHistories)
-                                {
-                                    <td>@medicalHistory.Name</td>
-                                }
+                                <td>
+                                    <ul>
+                                        @foreach (var allergy in Model.Allergies)
+                                        {
+                                            <li>@allergy.Name</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach (var medicalHistory in Model.MedicalHistories)
+                                        {
+                                            <li>@medicalHistory.Name</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach (var prescription in Model.Prescriptions)
+                                        {
+                                            <li>@prescription.StartDate</li>
+                                        }
+                                    </ul>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

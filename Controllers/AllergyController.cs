@@ -1,6 +1,7 @@
 using MEDManager.Data;
 using MEDManager.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 namespace MEDManager.Controllers
 {
     public class AllergyController : Controller
@@ -11,6 +12,31 @@ namespace MEDManager.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Find(string searchString)
+        {
+            if (_dbContext.Allergies == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            List<Allergy> allergies = new();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                allergies = _dbContext.Allergies.Where(s => s.Name!.ToUpper().Contains(searchString.ToUpper())).ToList();
+            }
+
+            return View("Index", allergies);
+        }
+
+        [HttpPost]
+        public string Find(string searchString, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + searchString;
+        }
+
         // GET: AllergyController
         public ActionResult Index()
         {

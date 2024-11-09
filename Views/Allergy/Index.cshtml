@@ -1,11 +1,17 @@
 ﻿@model IEnumerable<Allergy>
 @{
+
     <head>
         <title>Index</title>
     </head>
 
     <body>
         <div class="container text-center">
+            <form class="d-flex" role="search" asp-controller="Allergy" asp-action="Find" method="get">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" type="text"
+                    name="SearchString" />
+                <button class="btn btn-outline-primary" type="submit" value="Filter">Search</button>
+            </form>
             <div class="row">
                 <div class="col">
                 </div>
@@ -25,7 +31,8 @@
                             {
                                 <tr>
                                     <td>@allergy.Name</td>
-                                    <td><a asp-action="ShowDetails" asp-route-id="@allergy.Id"><i class="bi bi-file-earmark-text"></i></a></td>
+                                    <td><a asp-action="ShowDetails" asp-route-id="@allergy.Id"><i
+                                                class="bi bi-file-earmark-text"></i></a></td>
                                     <td><a asp-action="Edit" asp-route-id="@allergy.Id"><i class="bi bi-pen"></i></a></td>
                                     <td><a asp-action="Delete" asp-route-id="@allergy.Id"><i class="bi bi-trash3"></i></a></td>
                                 </tr>
@@ -51,4 +58,3 @@
         </div>
     </body>
 }
-

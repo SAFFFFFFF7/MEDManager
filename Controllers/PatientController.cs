@@ -21,6 +21,31 @@ namespace MEDManager.Controllers
             _userManager = userManager;
             _dbContext = dbContext;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Find(string searchString)
+        {
+            if (_dbContext.Patients == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            List<Patient> patients = new();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = _dbContext.Patients.Where(s => (s.FirstName!.ToUpper().Contains(searchString.ToUpper()) ) || (s.LastName!.ToUpper().Contains(searchString.ToUpper()))  ).ToList();
+            }
+
+            return View("Index", patients);
+        }
+
+        [HttpPost]
+        public string Find(string searchString, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + searchString;
+        }
+
         // GET: MedicamentController
         public async Task<IActionResult> Index()
         {
@@ -34,6 +59,7 @@ namespace MEDManager.Controllers
             var patient = await _dbContext.Patients
                 .Include(p => p.MedicalHistories)
                 .Include(p => p.Allergies)
+                .Include(p => p.Prescriptions)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (patient != null)
@@ -148,7 +174,7 @@ namespace MEDManager.Controllers
                 SelectedMedicalHistoryIds = patient.MedicalHistories.Select(m => m.Id).ToList() ?? new List<int>(),
                 SelectedAllergyIds = patient.Allergies.Select(a => a.Id).ToList() ?? new List<int>(),
                 DrpMedicalHistories = _dbContext.MedicalHistories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList(),
-                DrpAllergies = _dbContext.Allergies.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList() 
+                DrpAllergies = _dbContext.Allergies.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList()
             };
 
             return View(viewModel);
