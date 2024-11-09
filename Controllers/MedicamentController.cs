@@ -46,6 +46,22 @@ namespace MEDManager.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ShowDetails(int id)
+        {
+            var medicament = await _dbContext.Medicaments
+                .Include(p => p.MedicalHistories)
+                .Include(p => p.Allergies)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (medicament != null)
+            {
+                return View(medicament);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Add()
         {
             var viewModel = new MedicamentViewModel
