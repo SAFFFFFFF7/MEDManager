@@ -2,6 +2,7 @@ using MEDManager.Data;
 using MEDManager.Models;
 using MEDManager.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace MEDManager.Controllers
@@ -70,6 +71,8 @@ namespace MEDManager.Controllers
                 Allergies = await _dbContext.Allergies.ToListAsync(),
                 SelectedMedicalHistoryIds = new List<int>(),
                 SelectedAllergyIds = new List<int>(),
+                DrpMedicalHistories = _dbContext.MedicalHistories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList(),
+                DrpAllergies = _dbContext.Allergies.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList()
             };
 
             return View(viewModel);
@@ -160,7 +163,9 @@ namespace MEDManager.Controllers
                 MedicalHistories = await _dbContext.MedicalHistories.ToListAsync(),
                 Allergies = await _dbContext.Allergies.ToListAsync(),
                 SelectedMedicalHistoryIds = medicament.MedicalHistories.Select(m => m.Id).ToList() ?? new List<int>(),
-                SelectedAllergyIds = medicament.Allergies.Select(a => a.Id).ToList() ?? new List<int>()
+                SelectedAllergyIds = medicament.Allergies.Select(a => a.Id).ToList() ?? new List<int>(),
+                DrpMedicalHistories = _dbContext.MedicalHistories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList(),
+                DrpAllergies = _dbContext.Allergies.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList()
             };
 
             return View(viewModel);

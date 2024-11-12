@@ -1,80 +1,4 @@
-﻿@* <!DOCTYPE html>
-<html>
-
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>@ViewBag.Title</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
-rel="stylesheet">
-<link href="~/css/bootstrap-multiselect.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/css/site.css" />
-
-<script src="https://davidstutz.github.io/bootstrap-multiselect/docs/js/jquery-2.2.4.min.js"></script>
-<script src="https://davidstutz.github.io/bootstrap-multiselect/docs/js/bootstrap.bundle-4.5.2.min.js"></script>
-<script src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-
-@RenderSection("Scripts", required: false)
-</head>
-
-<body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-<div class="container-fluid">
-<a class="navbar-brand" asp-action="Index" asp-controller="Home">Home</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarNav">
-<ul class="navbar-nav">
-@if (User?.Identity?.IsAuthenticated == true)
-{
-<li class="nav-item">
-<a asp-action="Index" asp-controller="Medicament" asp-route-id="" class="nav-link active"
-aria-current="page">Voir les médicaments</a>
-</li>
-<li class="nav-item">
-<a asp-action="Index" asp-controller="Patient" asp-route-id="" class="nav-link active"
-aria-current="page">Voir les patients</a>
-</li>
-<li class="nav-item">
-<a asp-action="Index" asp-controller="Allergy" asp-route-id="" class="nav-link active"
-aria-current="page">Voir les allergies</a>
-</li>
-<li class="nav-item">
-<a asp-action="Index" asp-controller="MedicalHistory" asp-route-id="" class="nav-link active"
-aria-current="page">Voir les antécedents</a>
-</li>
-<li class="nav-item">
-<a asp-action="Index" asp-controller="Prescription" asp-route-id="" class="nav-link active"
-aria-current="page">Voir les ordonnances</a>
-</li>
-<li class="nav-item" class="navbar-text">
-<a class="nav-link active">Hello, @User.Identity.Name!</a>
-</li>
-<li class="nav-item">
-<a asp-action="Logout" asp-controller="Account" asp-route-id="" class="nav-link active"
-aria-current="page">Logout</a>
-</li>
-}
-else
-{
-<li class="nav-item">
-<a asp-action="Login" asp-route-id="" aria-disabled="true" asp-controller="Account">Login</a>
-</li>
-}
-</ul>
-</div>
-</div>
-</nav>
-<div>
-@RenderBody()
-</div>
-</body>
-</html> *@
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -90,6 +14,8 @@ else
     <script src="https://davidstutz.github.io/bootstrap-multiselect/docs/js/jquery-2.2.4.min.js"></script>
     <script src="https://davidstutz.github.io/bootstrap-multiselect/docs/js/bootstrap.bundle-4.5.2.min.js"></script>
     <script src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @RenderSection("Scripts", required: false)
 
@@ -112,6 +38,12 @@ else
             color: white;
         }
 
+        .navbar-color {
+            background-color: rgb(222, 226, 230, 0.5);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid #495057;
+        }
+
         .sidebar .nav-link:hover {
             background-color: #495057;
         }
@@ -119,7 +51,10 @@ else
         /* Style pour le contenu principal */
         .content {
             flex-grow: 1;
-            padding: 20px;
+        @*
+            padding:
+            20px;
+            *@
         }
     </style>
 </head>
@@ -132,24 +67,26 @@ else
             @if (User?.Identity?.IsAuthenticated == true)
             {
                 <li class="nav-item">
+                    <a asp-action="Index" asp-controller="Dashboard" asp-route-id="" class="nav-link"
+                        aria-current="page">Accueil</a>
+                </li>
+                <li class="nav-item">
                     <a asp-action="Index" asp-controller="Medicament" asp-route-id="" class="nav-link"
-                        aria-current="page">Voir les médicaments</a>
+                        aria-current="page">Médicaments</a>
                 </li>
                 <li class="nav-item">
-                    <a asp-action="Index" asp-controller="Patient" asp-route-id="" class="nav-link" aria-current="page">Voir
-                        les patients</a>
+                    <a asp-action="Index" asp-controller="Patient" asp-route-id="" class="nav-link" aria-current="page">Patients</a>
                 </li>
                 <li class="nav-item">
-                    <a asp-action="Index" asp-controller="Allergy" asp-route-id="" class="nav-link" aria-current="page">Voir
-                        les allergies</a>
+                    <a asp-action="Index" asp-controller="Allergy" asp-route-id="" class="nav-link" aria-current="page">Allergies</a>
                 </li>
                 <li class="nav-item">
                     <a asp-action="Index" asp-controller="MedicalHistory" asp-route-id="" class="nav-link"
-                        aria-current="page">Voir les antécedents</a>
+                        aria-current="page">Antécedents</a>
                 </li>
                 <li class="nav-item">
                     <a asp-action="Index" asp-controller="Prescription" asp-route-id="" class="nav-link"
-                        aria-current="page">Voir les ordonnances</a>
+                        aria-current="page">Ordonnances</a>
                 </li>
             }
             else
@@ -160,22 +97,17 @@ else
     </div>
 
     <div class="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-            <a class="navbar-brand" href="#"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <nav class="navbar navbar-expand-lg navbar-color px-4 sticky-top">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     @if (User?.Identity?.IsAuthenticated == true)
                     {
                         <li class="nav-item" class="navbar-text">
-                            <a class="nav-link active">Hello, @User.Identity.Name!</a>
+                            <a class="nav-link active bi bi-person-circle"> @User.Identity.Name</a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="Logout" asp-controller="Account" asp-route-id="" class="nav-link"
-                                aria-current="page">Logout</a>
+                            <a asp-action="Logout" asp-controller="Account" asp-route-id="" class="btn btn-primary"
+                                aria-current="page">Se déconnecter</a>
                         </li>
                     }
                     else

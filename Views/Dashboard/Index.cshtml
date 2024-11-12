@@ -1,0 +1,62 @@
+﻿<div class="container text-center">
+    <div class="row align-items-start">
+        <div class="col">
+            <div class="card h-10">
+                <div class="card-header">
+                    <h5>Médicaments les plus préscris</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="medicamentsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            One of three columns
+        </div>
+        <div class="col">
+            One of three columns
+        </div>
+    </div>
+</div>
+<canvas id="medicamentsChart"></canvas>
+<script>
+    const data = @Html.Raw(Json.Serialize(ViewBag.MedicamentData));
+    const labels = @Html.Raw(Json.Serialize(ViewBag.MedicamentLabels));
+
+    const ctx = document.getElementById('medicamentsChart').getContext('2d');
+    const charts = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels, // Labels
+            datasets: [{
+                label: 'Consultations',
+                data: data, // Les données
+                borderColor:
+                    [
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(201, 203, 207, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                backgroundColor:
+                    [
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(201, 203, 207, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        }
+    });
+</script>

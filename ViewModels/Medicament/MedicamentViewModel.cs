@@ -32,4 +32,7 @@ public class MedicamentViewModel
 
     public List<int> SelectedAllergyIds { get; set; } = new();
     public List<int> SelectedMedicalHistoryIds { get; set; } = new();
+    public List<SelectListItem> DrpMedicalHistories { get; set; } = new();
+
+    public List<SelectListItem> DrpAllergies { get; set; } = new();
 }
