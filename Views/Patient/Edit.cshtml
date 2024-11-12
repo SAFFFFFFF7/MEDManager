@@ -51,33 +51,11 @@
         <span asp-validation-for="Weight" class="text-danger"></span>
     </div>
 
-
-    @* <h4>Allergies</h4>
     <div class="form-group">
-    @foreach (var allergy in Model.Allergies)
-    {
-    <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="SelectedAllergyIds" value="@allergy.Id"
-    @(Model.SelectedAllergyIds != null && Model.SelectedAllergyIds.Contains(allergy.Id) ? "checked" :
-    "") />
-    <label class="form-check-label">@allergy.Name</label>
+        <label asp-for="SecurityCardNumber" class="control-label"></label>
+        <input asp-for="SecurityCardNumber" class="form-control" />
+        <span asp-validation-for="SecurityCardNumber" class="text-danger"></span>
     </div>
-    }
-    </div>
-
-
-    <h4>Antécédents</h4>
-    <div class="form-group">
-    @foreach (var medicalHistory in Model.MedicalHistories)
-    {
-    <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="SelectedMedicalHistoryIds" value="@medicalHistory.Id"
-    @(Model.SelectedMedicalHistoryIds != null &&
-    Model.SelectedMedicalHistoryIds.Contains(medicalHistory.Id) ? "checked" : "") />
-    <label class="form-check-label">@medicalHistory.Name</label>
-    </div>
-    }
-    </div> *@
 
     <div class="form-group">
         @Html.LabelFor(model => model.SelectedMedicalHistoryIds, new { @class = "col-sm-2 col-form-label" })

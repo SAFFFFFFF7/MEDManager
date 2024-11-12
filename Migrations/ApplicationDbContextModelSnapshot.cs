@@ -196,7 +196,8 @@ namespace MEDManager.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("DoctorId")
@@ -205,20 +206,27 @@ namespace MEDManager.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int>("Height")
+                    b.Property<int?>("Height")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<double>("Weight")
-                        .HasColumnType("double");
+                    b.Property<int?>("SecurityCardNumber")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

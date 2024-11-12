@@ -32,7 +32,7 @@ namespace MEDManager.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -66,7 +66,7 @@ namespace MEDManager.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(doctor, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard");
                 }
 
                 foreach (var error in result.Errors)
@@ -75,14 +75,14 @@ namespace MEDManager.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Register", "Account");
         }
 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
     }
 }

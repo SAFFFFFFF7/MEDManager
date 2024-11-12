@@ -38,6 +38,11 @@ public class PatientViewModel
     [Required(ErrorMessage = "Le poids du patient est requis.")]
     [Range(typeof(int), "0", "300", ErrorMessage = "Le poids du patient doit être compris entre 0 et 300 kg.")]
     public int Weight { get; set; }
+    
+    [Display(Name = "Numéro de sécurité social")]
+    [Required(ErrorMessage = "Le numéro de sécurité social est obligatoire.")]
+    // [Range(typeof(int), "0", "300", ErrorMessage = "Le poids du patient doit être compris entre 0 et 300 kg.")]
+    public int? SecurityCardNumber { get; set; }
     public List<MedicalHistory>? MedicalHistories { get; set; }
     public List<Allergy>? Allergies { get; set; }
 

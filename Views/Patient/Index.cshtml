@@ -24,6 +24,8 @@
                                 <th scope="col">Prénom</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">Âge</th>
+                                <th scope="col">Taille</th>
+                                <th scope="col">Poids</th>
                                 <th scope="col">Details</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
@@ -36,6 +38,8 @@
                                     <td>@patient.FirstName</td>
                                     <td>@patient.LastName</td>
                                     <td>@patient.Age</td>
+                                    <td>@patient.Height</td>
+                                    <td>@patient.Weight</td>
                                     <td><a asp-action="ShowDetails" asp-route-id="@patient.Id"><i
                                                 class="bi bi-file-earmark-text"></i></a></td>
                                     <td><a asp-action="Edit" asp-route-id="@patient.Id"><i class="bi bi-pen"></i></a></td>

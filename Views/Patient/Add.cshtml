@@ -48,6 +48,12 @@
     </div>
 
     <div class="form-group">
+        <label asp-for="SecurityCardNumber" class="control-label"></label>
+        <input asp-for="SecurityCardNumber" class="form-control" />
+        <span asp-validation-for="SecurityCardNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.SelectedMedicalHistoryIds, new { @class = "col-sm-2 col-form-label" })
         <div class="col-sm-6">
             @Html.ListBoxFor(model => model.SelectedMedicalHistoryIds, new MultiSelectList(Model.DrpMedicalHistories,

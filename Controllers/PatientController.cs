@@ -133,6 +133,7 @@ namespace MEDManager.Controllers
                     Gender = viewModel.Gender,
                     Height = viewModel.Height,
                     Weight = viewModel.Weight,
+                    SecurityCardNumber = viewModel.SecurityCardNumber,
                     DoctorId = _doctorId
                 };
 
@@ -232,6 +233,7 @@ namespace MEDManager.Controllers
                     Gender = patient.Gender,
                     Height = patient.Height,
                     Weight = patient.Weight,
+                    SecurityCardNumber = patient.SecurityCardNumber,
                     MedicalHistories = await _dbContext.MedicalHistories.ToListAsync(),
                     Allergies = await _dbContext.Allergies.ToListAsync(),
                     SelectedMedicalHistoryIds = patient.MedicalHistories.Select(m => m.Id).ToList() ?? new List<int>(),
@@ -278,8 +280,10 @@ namespace MEDManager.Controllers
                     patient.Gender = viewModel.Gender;
                     patient.Height = viewModel.Height;
                     patient.Weight = viewModel.Weight;
+                    patient.SecurityCardNumber = viewModel.SecurityCardNumber;
                     patient.DoctorId = patient.DoctorId;
                     patient.Doctor = patient.Doctor;
+                    
 
                     // Mise à jour des allergies
                     patient.Allergies.Clear();
