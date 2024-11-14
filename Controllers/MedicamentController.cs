@@ -4,9 +4,11 @@ using MEDManager.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MEDManager.Controllers
 {
+    [Authorize]
     public class MedicamentController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -79,12 +81,21 @@ namespace MEDManager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Medicament medicament, MedicamentViewModel viewModel)
+        public async Task<IActionResult> Add(MedicamentViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                viewModel.DrpMedicalHistories = _dbContext.MedicalHistories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+                viewModel.DrpAllergies = _dbContext.Allergies.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+                return View(viewModel);
             }
+
+            Medicament medicament = new Medicament
+            {
+                Name = viewModel.Name,
+                Quantity = viewModel.Quantity,
+                Ingredients = viewModel.Ingredients
+            };
 
             if (viewModel.SelectedAllergyIds != null)
             {
@@ -238,8 +249,8 @@ namespace MEDManager.Controllers
                     }
                 }
             }
-            viewModel.MedicalHistories = await _dbContext.MedicalHistories.ToListAsync();
-            viewModel.Allergies = await _dbContext.Allergies.ToListAsync();
+            viewModel.DrpMedicalHistories = _dbContext.MedicalHistories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            viewModel.DrpAllergies = _dbContext.Allergies.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
             return View(viewModel);
         }
 

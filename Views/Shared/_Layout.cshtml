@@ -14,7 +14,7 @@
     <script src="https://davidstutz.github.io/bootstrap-multiselect/docs/js/jquery-2.2.4.min.js"></script>
     <script src="https://davidstutz.github.io/bootstrap-multiselect/docs/js/bootstrap.bundle-4.5.2.min.js"></script>
     <script src="https://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @RenderSection("Scripts", required: false)
@@ -66,28 +66,28 @@
         <ul class="nav nav-pills flex-column">
             @if (User?.Identity?.IsAuthenticated == true)
             {
-                <li class="nav-item">
-                    <a asp-action="Index" asp-controller="Dashboard" asp-route-id="" class="nav-link"
-                        aria-current="page">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-action="Index" asp-controller="Medicament" asp-route-id="" class="nav-link"
-                        aria-current="page">Médicaments</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-action="Index" asp-controller="Patient" asp-route-id="" class="nav-link" aria-current="page">Patients</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-action="Index" asp-controller="Allergy" asp-route-id="" class="nav-link" aria-current="page">Allergies</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-action="Index" asp-controller="MedicalHistory" asp-route-id="" class="nav-link"
-                        aria-current="page">Antécedents</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-action="Index" asp-controller="Prescription" asp-route-id="" class="nav-link"
-                        aria-current="page">Ordonnances</a>
-                </li>
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Dashboard" asp-route-id="" class="nav-link"
+                            aria-current="page">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Medicament" asp-route-id="" class="nav-link"
+                            aria-current="page">Médicaments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Patient" asp-route-id="" class="nav-link" aria-current="page">Patients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Allergy" asp-route-id="" class="nav-link" aria-current="page">Allergies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="MedicalHistory" asp-route-id="" class="nav-link"
+                            aria-current="page">Antécedents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Prescription" asp-route-id="" class="nav-link"
+                            aria-current="page">Ordonnances</a>
+                    </li>
             }
             else
             {
@@ -103,7 +103,7 @@
                     @if (User?.Identity?.IsAuthenticated == true)
                     {
                         <li class="nav-item" class="navbar-text">
-                            <a class="nav-link active bi bi-person-circle"> @User.Identity.Name</a>
+                            <a class="nav-link active bi bi-person-circle" asp-action="Index" asp-controller="Account"> @User.Identity.Name</a>
                         </li>
                         <li class="nav-item">
                             <a asp-action="Logout" asp-controller="Account" asp-route-id="" class="nav-link"

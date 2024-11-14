@@ -1,97 +1,85 @@
 ﻿@model PatientViewModel
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit</title>
-</head>
-
-<h1>Éditer un patient</h1>
-
-<form asp-action="Edit">
-
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="PatientId" />
-
-    <div class="form-group">
-        <label asp-for="FirstName" class="control-label"></label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="LastName" class="control-label"></label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Age" class="control-label"></label>
-        <input asp-for="Age" class="form-control" />
-        <span asp-validation-for="Age" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <select asp-for="Gender" asp-items="@Html.GetEnumSelectList(typeof(Gender))" class="form-control">
-            <option value="">Selectionner le genre</option>
-        </select>
-        @* ajout de message d'erreur de validation inline pour chaque propriete individuellement *@
-        <span asp-validation-for="Gender" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Height" class="control-label"></label>
-        <input asp-for="Height" class="form-control" />
-        <span asp-validation-for="Height" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Weight" class="control-label"></label>
-        <input asp-for="Weight" class="form-control" />
-        <span asp-validation-for="Weight" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="SecurityCardNumber" class="control-label"></label>
-        <input asp-for="SecurityCardNumber" class="form-control" />
-        <span asp-validation-for="SecurityCardNumber" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.SelectedMedicalHistoryIds, new { @class = "col-sm-2 col-form-label" })
-        <div class="col-sm-6">
-            @Html.ListBoxFor(model => model.SelectedMedicalHistoryIds, new MultiSelectList(Model.DrpMedicalHistories,
-                     "Value", "Text"), new
-                     {
-                         @class = "form-control",
-                         multiple = "multiple",
-                         id = "MedicalHistories_dropdown"
-                     })
+<div class="container py-5">
+    <div class="d-flex justify-content-center">
+        <div class="card shadow rounded" style="width: 100%; max-width: 15000px;">
+            <div class="card-header text-center" style="width: 100%;">
+                <h1 class="mb-0">Éditer un patient</h1>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="PatientId" />
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Age" class="control-label"></label>
+                        <input asp-for="Age" class="form-control" />
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <select asp-for="Gender" asp-items="@Html.GetEnumSelectList(typeof(Gender))" class="form-control">
+                            <option value="">Selectionner le genre</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Height" class="control-label"></label>
+                        <input asp-for="Height" class="form-control" />
+                        <span asp-validation-for="Height" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Weight" class="control-label"></label>
+                        <input asp-for="Weight" class="form-control" />
+                        <span asp-validation-for="Weight" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SecurityCardNumber" class="control-label"></label>
+                        <input asp-for="SecurityCardNumber" class="form-control" />
+                        <span asp-validation-for="SecurityCardNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SelectedMedicalHistoryIds, new { @class = "col-sm-2 col-form-label" })
+                        <div class="col-sm-6">
+                            @Html.ListBoxFor(model => model.SelectedMedicalHistoryIds, new MultiSelectList(Model.DrpMedicalHistories,
+                                    "Value", "Text"), new
+                                    {
+                                        @class = "form-control",
+                                        multiple = "multiple",
+                                        id = "MedicalHistories_dropdown"
+                                    })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SelectedAllergyIds, new { @class = "col-sm-2 col-form-label" })
+                        <div class="col-sm-6">
+                            @Html.ListBoxFor(model => model.SelectedAllergyIds, new MultiSelectList(Model.DrpAllergies,
+                                    "Value", "Text"), new
+                                    {
+                                        @class = "form-control",
+                                        multiple = "multiple",
+                                        id = "Allergies_dropdown"
+                                    })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                    </div>
+                </form>
+                <div>
+                    <a asp-action="Index">Retour à la liste</a>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.SelectedAllergyIds, new { @class = "col-sm-2 col-form-label" })
-        <div class="col-sm-6">
-            @Html.ListBoxFor(model => model.SelectedAllergyIds, new MultiSelectList(Model.DrpAllergies,
-                     "Value", "Text"), new
-                     {
-                         @class = "form-control",
-                         multiple = "multiple",
-                         id = "Allergies_dropdown"
-                     })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <input type="submit" value="Enregistrer" class="btn btn-primary" />
-    </div>
-
-
-</form>
-
-<div>
-    <a asp-action="Index">Retour à la liste</a>
 </div>
 
 @section Scripts

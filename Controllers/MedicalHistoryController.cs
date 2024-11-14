@@ -1,8 +1,10 @@
 using MEDManager.Data;
 using MEDManager.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 namespace MEDManager.Controllers
 {
+    [Authorize]
     public class MedicalHistoryController : Controller
     {
         private readonly ApplicationDbContext _dbContext;

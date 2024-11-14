@@ -5,24 +5,24 @@ namespace MEDManager.Models;
 
 public class RegisterViewModel
 {
-    [Required]
-    [Display(Name = "User Name")]
+    [Display(Name = "Nom d'utilisateur")]
+    [Required(ErrorMessage = "Le Nom d'utilisateur est requis")]
     public string? UserName { get; set; }
 
     [DataType(DataType.Password)]
-    [Required]
-    [Display(Name = "Password")]
+    [Display(Name = "Mot de passe")]
+    [Required(ErrorMessage = "Le mot de passe est requis")]
     public string? Password { get; set; }
 
-    [Required]
     [Display(Name = "Prénom")]
+    [Required(ErrorMessage = "Le prénom est requis")]
     public required string FirstName { get; set; }
 
-    [Required]
     [Display(Name = "Nom")]
+    [Required(ErrorMessage = "Le Nom est requis")]
     public required string LastName { get; set; }
 
-    [Required]
     [Display(Name = "Email")]
+    [Required(ErrorMessage = "L'email est requis")]
     public required string Email { get; set; }
 }

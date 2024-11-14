@@ -1,62 +1,65 @@
 ﻿@model IEnumerable<MedicalHistory>
-@{
 
-    <head>
-        <title>Index</title>
-    </head>
-
-    <body>
-        <div class="container text-center">
-            <form class="d-flex" role="search" asp-controller="MedicalHistory" asp-action="Find" method="get">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" type="text"
-                    name="SearchString" />
-                <button class="btn btn-outline-primary" type="submit" value="Filter">Search</button>
-            </form>
-            <div class="row">
-                <div class="col">
-                </div>
-                <div class="col-8">
-                    <h1>Afficher ici la liste des antécedents :</h1>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Details</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var medicalHistory in Model)
-                            {
-                                <tr>
-                                    <td>@medicalHistory.Name</td>
-                                    <td><a asp-action="ShowDetails" asp-route-id="@medicalHistory.Id"><i
-                                                class="bi bi-file-earmark-text"></i></a></td>
-                                    <td><a asp-action="Edit" asp-route-id="@medicalHistory.Id"><i class="bi bi-pen"></i></a>
-                                    </td>
-                                    <td><a asp-action="Delete" asp-route-id="@medicalHistory.Id"><i
-                                                class="bi bi-trash3"></i></a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col">
-                </div>
+<div class="container py-5">
+    <div class="d-flex justify-content-center">
+        <div class="card shadow rounded" style="width: 100%; max-width: 15000px;">
+            <div class="card-header text-center" style="width: 100%;">
+                <h1 class="mb-0">Afficher ici la liste des antécedents :</h1>
             </div>
-            <div class="row">
-                <div class="col">
-                </div>
-                <div class="col-5">
-                    <a asp-action="Add" asp-route-id="" type="button" class="btn btn-primary"
-                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        Ajouter un antécedents
-                    </a>
-                </div>
-                <div class="col">
+            <div class="card-body">
+                <div class="container text-center">
+                    <form class="d-flex" role="search" asp-controller="MedicalHistory" asp-action="Find" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                            type="text" name="SearchString" />
+                        <button class="btn btn-outline-primary" type="submit" value="Filter">Search</button>
+                    </form>
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                        <div class="col-8">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">Details</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var medicalHistory in Model)
+                                    {
+                                        <tr>
+                                            <td>@medicalHistory.Name</td>
+                                            <td><a asp-action="ShowDetails" asp-route-id="@medicalHistory.Id"><i
+                                                        class="bi bi-file-earmark-text"></i></a></td>
+                                            <td><a asp-action="Edit" asp-route-id="@medicalHistory.Id"><i
+                                                        class="bi bi-pen"></i></a>
+                                            </td>
+                                            <td><a asp-action="Delete" asp-route-id="@medicalHistory.Id"><i
+                                                        class="bi bi-trash3"></i></a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                        <div class="col-5">
+                            <a asp-action="Add" asp-route-id="" type="button" class="btn btn-primary"
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                Ajouter un antécedents
+                            </a>
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
-}
+    </div>
+</div>

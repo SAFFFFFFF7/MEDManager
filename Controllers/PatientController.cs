@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MEDManager.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MEDManager.Controllers
 {
+    [Authorize]
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -120,8 +122,8 @@ namespace MEDManager.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    viewModel.Allergies = await _dbContext.Allergies.ToListAsync();
-                    viewModel.MedicalHistories = await _dbContext.MedicalHistories.ToListAsync();
+                    viewModel.DrpMedicalHistories = _dbContext.MedicalHistories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+                    viewModel.DrpAllergies = _dbContext.Allergies.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
                     return View(viewModel);
                 }
 
@@ -283,7 +285,7 @@ namespace MEDManager.Controllers
                     patient.SecurityCardNumber = viewModel.SecurityCardNumber;
                     patient.DoctorId = patient.DoctorId;
                     patient.Doctor = patient.Doctor;
-                    
+
 
                     // Mise à jour des allergies
                     patient.Allergies.Clear();
@@ -329,8 +331,8 @@ namespace MEDManager.Controllers
             }
 
             // Si nous arrivons ici, quelque chose a échoué, réafficher le formulaire
-            viewModel.MedicalHistories = await _dbContext.MedicalHistories.ToListAsync();
-            viewModel.Allergies = await _dbContext.Allergies.ToListAsync();
+            viewModel.DrpMedicalHistories = _dbContext.MedicalHistories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            viewModel.DrpAllergies = _dbContext.Allergies.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
             return View(viewModel);
         }
 

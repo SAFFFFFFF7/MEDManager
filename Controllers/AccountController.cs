@@ -16,8 +16,6 @@ namespace MEDManager.Controllers
             _userManager = userManager;
         }
 
-
-
         public IActionResult Login()
         {
             return View(); // Affiche la vue Login
@@ -28,7 +26,7 @@ namespace MEDManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName , model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
                 if (result.Succeeded)
                 {
@@ -54,7 +52,8 @@ namespace MEDManager.Controllers
             if (ModelState.IsValid)
             {
 
-                var doctor = new Doctor {
+                var doctor = new Doctor
+                {
                     UserName = model.UserName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,

@@ -1,93 +1,59 @@
 ﻿@using MEDManager.ViewModel;
-
 @model MedicamentViewModel
 
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit</title>
-</head>
-
-
-<h1>Modifier un médicament :</h1>
-
-<form asp-action="Edit" asp-controller="Medicament" method="post">
-
-    <input asp-for="@Model.MedicamentId" type="hidden" /> 
-
-    <div class="form-group">
-        <label asp-for="@Model.Name"></label> <input asp-for="@Model.Name" class="form-control" />
-        <span asp-validation-for="@Model.Name" class="text-danger"></span>
-    </div> 
-
-    <div class="form-group">
-        <label asp-for="@Model.Quantity"></label> <input asp-for="@Model.Quantity" class="form-control" />
-        <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
-    </div> 
-
-    <div class="form-group">
-        <label asp-for="@Model.Ingredients"></label> <input asp-for="@Model.Ingredients" class="form-control" />
-        <span asp-validation-for="@Model.Ingredients" class="text-danger"></span>
-    </div>
-
-    @* <h4>Allergies</h4>
-    <div class="form-group">
-        @foreach (var allergy in Model.Allergies)
-        {
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="SelectedAllergyIds" value="@allergy.Id"
-                @(Model.SelectedAllergyIds != null && Model.SelectedAllergyIds.Contains(allergy.Id) ? "checked" : "") />
-                <label class="form-check-label">@allergy.Name</label>
+<div class="container py-5">
+    <div class="d-flex justify-content-center">
+        <div class="card shadow rounded" style="width: 100%; max-width: 15000px;">
+            <div class="card-header text-center" style="width: 100%;">
+                <h1 class="mb-0">Modifier un médicament :</h1>
             </div>
-        }
-    </div>
-
-    <h4>Antécédents</h4>
-    <div class="form-group">
-        @foreach (var medicalHistory in Model.MedicalHistories)
-        {
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="SelectedMedicalHistoryIds" value="@medicalHistory.Id"
-                @(Model.SelectedMedicalHistoryIds != null && Model.SelectedMedicalHistoryIds.Contains(medicalHistory.Id)
-                    ? "checked" : "") />
-                <label class="form-check-label">@medicalHistory.Name</label>
+            <div class="card-body">
+                <form asp-action="Edit" asp-controller="Medicament" method="post">
+                    <input asp-for="@Model.MedicamentId" type="hidden" /> 
+                    <div class="form-group">
+                        <label asp-for="@Model.Name"></label> <input asp-for="@Model.Name" class="form-control" />
+                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    </div> 
+                    <div class="form-group">
+                        <label asp-for="@Model.Quantity"></label> <input asp-for="@Model.Quantity" class="form-control" />
+                        <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+                    </div> 
+                    <div class="form-group">
+                        <label asp-for="@Model.Ingredients"></label> <input asp-for="@Model.Ingredients" class="form-control" />
+                        <span asp-validation-for="@Model.Ingredients" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SelectedMedicalHistoryIds, new { @class = "col-sm-2 col-form-label" })
+                        <div class="col-sm-6">
+                            @Html.ListBoxFor(model => model.SelectedMedicalHistoryIds, new MultiSelectList(Model.DrpMedicalHistories,
+                                    "Value", "Text"), new
+                                    {
+                                        @class = "form-control",
+                                        multiple = "multiple",
+                                        id = "MedicalHistories_dropdown"
+                                    })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SelectedAllergyIds, new { @class = "col-sm-2 col-form-label" })
+                        <div class="col-sm-6">
+                            @Html.ListBoxFor(model => model.SelectedAllergyIds, new MultiSelectList(Model.DrpAllergies,
+                                    "Value", "Text"), new
+                                    {
+                                        @class = "form-control",
+                                        multiple = "multiple",
+                                        id = "Allergies_dropdown"
+                                    })
+                        </div>
+                    </div>
+                    <input type="submit" value="Sauvegarder" class="btn btn-primary" />
+                    <input type="button" onclick="history.back()" value="Retour" class="btn btn-secondary" />
+                </form>
+                <div asp-validation-summary="All" class="text-danger"></div>
             </div>
-        }
-    </div> *@
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.SelectedMedicalHistoryIds, new { @class = "col-sm-2 col-form-label" })
-        <div class="col-sm-6">
-            @Html.ListBoxFor(model => model.SelectedMedicalHistoryIds, new MultiSelectList(Model.DrpMedicalHistories,
-                     "Value", "Text"), new
-                     {
-                         @class = "form-control",
-                         multiple = "multiple",
-                         id = "MedicalHistories_dropdown"
-                     })
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.SelectedAllergyIds, new { @class = "col-sm-2 col-form-label" })
-        <div class="col-sm-6">
-            @Html.ListBoxFor(model => model.SelectedAllergyIds, new MultiSelectList(Model.DrpAllergies,
-                     "Value", "Text"), new
-                     {
-                         @class = "form-control",
-                         multiple = "multiple",
-                         id = "Allergies_dropdown"
-                     })
-        </div>
-    </div>
-
-    <input type="submit" value="Sauvegarder" class="btn btn-primary" />
-    <input type="button" onclick="history.back()" value="Retour" class="btn btn-secondary" />
-</form>
-
-@* Permet de visualiser le resume de l'ensemble des erreurs de validation, ceci est un tag helper *@
-<div asp-validation-summary="All" class="text-danger"></div>
+</div>
 
 @section Scripts
 {

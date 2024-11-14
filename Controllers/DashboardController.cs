@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace MEDManager.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -34,17 +36,17 @@ namespace MEDManager.Controllers
             var mostConsultedPatients = _dbContext.Patients.Where(p => p.DoctorId == _doctorId)
                 .OrderByDescending(p => p.Prescriptions.Count).Take(5).ToList();
 
-            var patientsLabels = new List<string>();
-            var patientsData = new List<int>();
+            var patientLabels = new List<string>();
+            var patientData = new List<int>();
 
             foreach (var patient in mostConsultedPatients)
             {
-                patientsLabels.Add(patient.FirstName + " " + patient.LastName);
-                patientsData.Add(patient.Prescriptions.Count);
+                patientLabels.Add(patient.FirstName + " " + patient.LastName);
+                patientData.Add(patient.Prescriptions.Count);
             }
 
-            ViewBag.PatientsLabels = patientsLabels;
-            ViewBag.PatientsData = patientsData;
+            ViewBag.PatientLabels = patientLabels;
+            ViewBag.PatientData = patientData;
         }
 
         private void MostMedicamentInPrescriptionStat()

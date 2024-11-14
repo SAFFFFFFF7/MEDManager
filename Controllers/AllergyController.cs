@@ -1,9 +1,10 @@
 using MEDManager.Data;
 using MEDManager.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 namespace MEDManager.Controllers
 {
+    [Authorize]
     public class AllergyController : Controller
     {
         private readonly ApplicationDbContext _dbContext;

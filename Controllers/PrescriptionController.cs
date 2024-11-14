@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace MEDManager.Controllers
 {
+    [Authorize]
     public class PrescriptionController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
