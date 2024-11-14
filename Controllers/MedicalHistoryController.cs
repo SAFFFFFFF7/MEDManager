@@ -2,6 +2,7 @@ using MEDManager.Data;
 using MEDManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 namespace MEDManager.Controllers
 {
     [Authorize]
@@ -37,7 +38,7 @@ namespace MEDManager.Controllers
         {
             return "From [HttpPost]Index: filter on " + searchString;
         }
-        
+
         // GET: AllergyController
         public ActionResult Index()
         {
@@ -64,32 +65,25 @@ namespace MEDManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            MedicalHistory? mediHist = _dbContext.MedicalHistories.FirstOrDefault<MedicalHistory>(mh => mh.Id == id);
-
-            if (mediHist != null)
+            try
             {
-                return View(mediHist);
+                MedicalHistory? medicalHistoryToDelete = await _dbContext.MedicalHistories.Where(p => p.Id == id).FirstOrDefaultAsync();
+                if (medicalHistoryToDelete == null) return NotFound();
+
+                _dbContext.MedicalHistories.Remove(medicalHistoryToDelete);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("Index", "MedicalHistory");
             }
-
-            return NotFound();
-        }
-
-        [HttpPost]
-
-        public IActionResult DeleteConfirmed(int Id)
-        {
-            MedicalHistory? mediHist = _dbContext.MedicalHistories.FirstOrDefault<MedicalHistory>(mh => mh.Id == Id);
-
-            if (mediHist != null)
+            catch (DbUpdateException ex)
             {
-                _dbContext.MedicalHistories.Remove(mediHist);
-                _dbContext.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "MedicalHistory");
             }
-
-            return NotFound();
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "MedicalHistory");
+            }
         }
 
         [HttpGet]

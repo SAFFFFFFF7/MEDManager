@@ -2,6 +2,7 @@ using MEDManager.Data;
 using MEDManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 namespace MEDManager.Controllers
 {
     [Authorize]
@@ -64,32 +65,25 @@ namespace MEDManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Allergy? aller = _dbContext.Allergies.FirstOrDefault<Allergy>(a => a.Id == id);
-
-            if (aller != null)
+            try
             {
-                return View(aller);
+                Allergy? allergyToDelete = await _dbContext.Allergies.Where(p => p.Id == id).FirstOrDefaultAsync();
+                if (allergyToDelete == null) return NotFound();
+
+                _dbContext.Allergies.Remove(allergyToDelete);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("Index", "Allergy");
             }
-
-            return NotFound();
-        }
-
-        [HttpPost]
-
-        public IActionResult DeleteConfirmed(int Id)
-        {
-            Allergy? aller = _dbContext.Allergies.FirstOrDefault<Allergy>(a => a.Id == Id);
-
-            if (aller != null)
+            catch (DbUpdateException ex)
             {
-                _dbContext.Allergies.Remove(aller);
-                _dbContext.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Allergy");
             }
-
-            return NotFound();
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Allergy");
+            }
         }
 
         [HttpGet]

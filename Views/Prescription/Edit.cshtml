@@ -1,11 +1,22 @@
-﻿@using MEDManager.ViewModel
-@model Tuple<Prescription, IEnumerable<Medicament>>
+﻿@model PrescriptionViewModel
 
-@await Html.PartialAsync("_PatientCard", Model.Item1.Patient)
-
-@await Html.PartialAsync("_Form", new FormViewModel { PrescriptionId = Model.Item1.Id, 
-    StartDate = Model.Item1.StartDate, EndDate = Model.Item1.EndDate, Dosage = Model.Item1.Dosage, 
-    AdditionalInformation = Model.Item1.AdditionalInformation, Medicaments = Model.Item2.ToList(),
-    SelectedMedicamentIds = Model.Item1.Medicaments.Select(m => m.Id).ToList()
-})
-
+@{
+    ViewBag.Title = "Modification de l'ordonnance";
+    Layout = "_Layout";
+}
+<div class="container py-4">
+    <div class="d-flex justify-content-center">
+        <div class="card shadow rounded-lg" style="width: 100%; max-width: 1100px;">
+            <div class="card-header text-center" style="width: 100%;">
+                <h1 class="mb-0">Modification de l'ordonnance</h1>
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("_PatientCard", Model.Patient)
+                <form asp-action="Edit" asp-controller="Prescription" method="post">
+                    @await Html.PartialAsync("_Form", Model)
+                    <input class="btn btn-primary my-2" type="submit" value="Enregistrer vos modifications"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

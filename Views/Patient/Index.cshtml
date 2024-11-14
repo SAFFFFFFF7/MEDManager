@@ -42,8 +42,39 @@
                                                     class="bi bi-file-earmark-text"></i></a></td>
                                         <td><a asp-action="Edit" asp-route-id="@patient.Id"><i class="bi bi-pen"></i></a>
                                         </td>
-                                        <td><a asp-action="Delete" asp-route-id="@patient.Id"><i
-                                                    class="bi bi-trash3"></i></a></td>
+                                        <td><a type="button" data-toggle="modal" data-target="#supprModal@{
+                                                @Html.DisplayFor(p => patient.Id)
+                                            }" class="text-primary">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                            <div class="modal fade" tabindex="-1" id="supprModal@{
+                                                    @Html.DisplayFor(p => patient.Id)
+                                                }" aria-labelledby="modalLabelSuppr" aria-hidden="true">>
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Êtes-vous sûr de supprimer 
+                                                                @patient.FirstName
+                                                                @patient.LastName ?</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Veuillez confirmer ci-dessous.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Fermer</button>
+                                                            <form asp-action="Delete" asp-route-id="@patient.Id"
+                                                                method="get"><button
+                                                                    class="btn btn-danger">Confirmer</button></form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>

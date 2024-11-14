@@ -172,43 +172,25 @@ namespace MEDManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                Patient? pati = _dbContext.Patients.FirstOrDefault<Patient>(p => p.Id == id);
+                Patient? patientToDelete = await _dbContext.Patients.Where(p => p.Id == id).FirstOrDefaultAsync();
+                if (patientToDelete == null) return NotFound();
 
-                if (pati != null)
-                {
-                    return View(pati);
-                }
+                _dbContext.Patients.Remove(patientToDelete);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("Index", "Patient");
             }
             catch (DbUpdateException ex)
             {
-                View("Error");
+                return RedirectToAction("Index", "Patient");
             }
-            return NotFound();
-        }
-
-        [HttpPost]
-        public IActionResult DeleteConfirmed(int Id)
-        {
-            try
+            catch (Exception ex)
             {
-                Patient? pati = _dbContext.Patients.FirstOrDefault<Patient>(p => p.Id == Id);
-
-                if (pati != null)
-                {
-                    _dbContext.Patients.Remove(pati);
-                    _dbContext.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                return RedirectToAction("Index", "Patient");
             }
-            catch (DbUpdateException ex)
-            {
-                View("Error");
-            }
-            return NotFound();
         }
 
         [HttpGet]
