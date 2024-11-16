@@ -1,6 +1,7 @@
 using System.Data.Common;
 using MEDManager.Data;
 using MEDManager.Models;
+using MEDManager.Services;
 using MEDManager.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -225,5 +226,27 @@ public class PrescriptionController : Controller
         {
             return RedirectToAction("Index", "Prescription");
         }
+    }
+
+    [HttpGet]
+    public IActionResult ExportPDF(int id)
+    {
+        var prescription = _dbContext.Prescriptions
+            .Include(p => p.Patient)
+            .Include(p => p.Doctor)
+            .Include(p => p.Medicaments)
+            .FirstOrDefault(p => p.Id == id);
+
+        if (prescription == null)
+        {
+            return NotFound();
+        }
+
+        var fileName = $"Prescription_{prescription.Patient.LastName}{prescription.Patient.FirstName}_{prescription.Id}.pdf";
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pdf", fileName);
+        PDFService.GeneratePrescriptionPdf(path, prescription);
+        var pdf = System.IO.File.ReadAllBytes(path);
+
+        return File(pdf, "application/pdf", path);
     }
 }

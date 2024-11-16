@@ -19,7 +19,7 @@
                                         <th scope="col">Nom</th>
                                         <th scope="col">Date de début</th>
                                         <th scope="col">Date de fin</th>
-                                        <th scope="col">Posologie</th>
+                                        <th scope="col">Dosage</th>
                                         <th scope="col">PDF</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
@@ -34,7 +34,7 @@
                                             <td>@prescription.StartDate</td>
                                             <td>@prescription.EndDate</td>
                                             <td>@prescription.Dosage</td>
-                                            <td><a asp-action="GeneratePdf" asp-route-id="@prescription.Id"><i
+                                            <td><a asp-action="ExportPDF" asp-route-id="@prescription.Id"><i
                                                         class="bi bi-file-earmark-pdf"></i></a></td>
                                             <td><a asp-action="Edit" asp-route-id="@prescription.Id"><i
                                                         class="bi bi-pen"></i></a></td>
