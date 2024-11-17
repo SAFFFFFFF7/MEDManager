@@ -4,10 +4,10 @@
     <div class="d-flex justify-content-center">
         <div class="card shadow rounded" style="width: 100%; max-width: 15000px;">
             <div class="card-header text-center" style="width: 100%;">
-                <h1 class="mb-0">Créér un compte</h1>
+                <h1 class="mb-0">Votre Compte</h1>
             </div>
             <div class="card-body">
-                <form asp-action="Register" asp-controller="Account" method="post">
+                <form asp-action="Edit" asp-controller="Account" method="post">
                     <div class="form-group">
                         <label asp-for="UserName"></label> <input asp-for="UserName" class="form-control" />
                         <span asp-validation-for="UserName" class="text-danger"></span>
@@ -30,7 +30,7 @@
                     </div>
                     <br />
                     <br />
-                    <input type="submit" value="Create Account" class="btn btn-primary" />
+                    <input type="submit" value="Mettre à jour" class="btn btn-primary" />
                 </form>
             </div>
         </div>
