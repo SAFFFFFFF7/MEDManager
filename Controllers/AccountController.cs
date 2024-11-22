@@ -166,7 +166,6 @@ namespace MEDManager.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
 
-                doctor1 = doctor;
             }
 
             return RedirectToAction("Register", "Account");

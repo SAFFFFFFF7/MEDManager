@@ -193,8 +193,6 @@ public class PrescriptionController : Controller
                     return NotFound();
                 }
             }
-            // _dbContext.Prescriptions.Update(prescription);
-            // _dbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -247,6 +245,6 @@ public class PrescriptionController : Controller
         PDFService.GeneratePrescriptionPdf(path, prescription);
         var pdf = System.IO.File.ReadAllBytes(path);
 
-        return File(pdf, "application/pdf", path);
+        return File(pdf, "application/pdf", fileName);
     }
 }

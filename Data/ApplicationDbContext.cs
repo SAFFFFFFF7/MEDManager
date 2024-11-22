@@ -6,13 +6,6 @@ namespace MEDManager.Data;
 
 public class ApplicationDbContext : IdentityDbContext<Doctor>
 {
-
-  // Nous allons creer un dbset pour chaque table de notre base de donnees
-  // Dbset est une classe generique qui represente une table dans la base de donnees
-  // Elle est responsable du mapping objet-relationnel
-
-
-  //TODO: Rename Allergys to Allergies TYPO WATCH OUT SAFWANE
   public DbSet<Allergy> Allergies => Set<Allergy>();
   public DbSet<MedicalHistory> MedicalHistories => Set<MedicalHistory>();
   public DbSet<Medicament> Medicaments => Set<Medicament>();

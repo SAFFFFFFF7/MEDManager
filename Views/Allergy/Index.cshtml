@@ -21,9 +21,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Nom</th>
-                                        <th scope="col">Details</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
+                                        <th scope="col">Modifier</th>
+                                        <th scope="col">Supprimer</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -31,8 +30,6 @@
                                     {
                                         <tr>
                                             <td>@allergy.Name</td>
-                                            <td><a asp-action="ShowDetails" asp-route-id="@allergy.Id"><i
-                                                        class="bi bi-file-earmark-text"></i></a></td>
                                             <td><a asp-action="Edit" asp-route-id="@allergy.Id"><i
                                                         class="bi bi-pen"></i></a></td>
                                             <td><a type="button" data-toggle="modal" data-target="#supprModal@{
