@@ -61,7 +61,12 @@
                                             <ul>
                                                 @foreach (var prescription in Model.Prescriptions)
                                                 {
-                                                    <li>@prescription.StartDate</li>
+                                                    <li>@prescription.StartDate 
+                                                        <a asp-controller="Prescription" asp-action="Edit" asp-route-id="@prescription.Id"><i
+                                                        class="bi bi-eye" data-toggle="tooltip" title="Voir l'ordonnance"></i></a>
+                                                        <a asp-controller="Prescription" asp-action="ExportPDF" asp-route-id="@prescription.Id"><i
+                                                        class="bi bi-file-earmark-pdf" data-toggle="tooltip" title="Générer un PDF"></i></a>
+                                                    </li>
                                                 }
                                             </ul>
                                         </td>

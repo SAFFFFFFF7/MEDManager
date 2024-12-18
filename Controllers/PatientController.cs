@@ -39,8 +39,13 @@ namespace MEDManager.Controllers
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     patients = _dbContext.Patients.Where(s => s.FirstName!.ToUpper().Contains(searchString.ToUpper()) || s.LastName!.ToUpper().Contains(searchString.ToUpper())).ToList();
+                    return View("Index", patients);
                 }
-                return View("Index", patients);
+                else
+                {
+                    patients = _dbContext.Patients.ToList();    
+                    return View("Index", patients);
+                }
             }
             catch (Exception ex)
             {

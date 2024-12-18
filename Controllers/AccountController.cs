@@ -111,6 +111,10 @@ namespace MEDManager.Controllers
 
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
             return View(); // Affiche la vue Login
         }
 
