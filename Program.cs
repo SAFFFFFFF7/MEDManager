@@ -37,6 +37,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 // apres l'instruction
 var app = builder.Build();
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
@@ -54,10 +59,6 @@ else
 
 builder.Services.AddAuthentication();
 
-app.UseForwardedHeaders(new ForwardedHeadersOptions
-{
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-});
 
 app.UseStaticFiles();
 app.UseAuthentication();
