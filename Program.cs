@@ -1,6 +1,8 @@
 using MEDManager.Data;
 using MEDManager.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpOverrides;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +24,6 @@ builder.Services.AddDefaultIdentity<Doctor>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 2;
-
     options.User.RequireUniqueEmail = true;
   }
 ).AddEntityFrameworkStores<ApplicationDbContext>();
@@ -36,6 +37,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 // apres l'instruction
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 // ajouter
 if (app.Environment.IsDevelopment())
 {
@@ -47,6 +52,12 @@ else
     app.UseStatusCodePagesWithRedirects("/Error/Index");
 }
 
+builder.Services.AddAuthentication();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 app.UseStaticFiles();
 app.UseAuthentication();
@@ -58,5 +69,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
+
+app.MapGet("/", () => "Hello ForwardedHeadersOptions!");
 
 app.Run();
